@@ -1,0 +1,244 @@
+#+TITLE: QB: Quack Bastard
+#+AUTHOR: csode
+#+DATE: 2025
+#+OPTIONS: toc:t num:nil html-style:nil
+* QB: Quack Bastard
+QB(quack bastard) is a programming language that is a better version of haskell. Everything does not need a build system the best programming language does not need other tools just to make it happy
+
+#+begin_src C
+  import "std.qb"
+  main -> int argc -> char **argv :: int {
+    print("Hello world\n");
+    return 0;
+  }
+#+end_src
+
+** Starting Page
+The program starts at the main function which has a return type of int.
+
+#+begin_src C
+  main -> int argc -> char **argv :: int {
+    return 0;
+  }
+#+end_#+begin_src language
+
+#+end_src
+
+** Typing mechanism
+It is statically typed meaning data types must be declared before hand. The way you declare things in C will exist.
+
+#+begin_src C
+  import "std.qb"
+  main -> int argc -> char **argv :: int {
+    char *hello = "Hello world";
+    print("{}\n", hello);
+    return 0;
+  }
+#+end_#+begin_src language
+
+#+end_src
+
+** Function Declaration
+
+The way we declare a function is with a name arg signature.
+
+#+begin_src C
+  import "std.qb"
+  hello :: void {
+    print("Hello world\n");
+  }
+#+end_src
+
+In this case hello is the function name where as void is the function return type.
+
+*** Function arguments
+
+The function argument can be passed with ****arrow(->)****. For example:
+
+#+begin_src C
+  import "std.qb"
+  hello -> int test :: void {
+    print("{}\n", test);
+  }
+#+end_src
+
+We are required to specify the type of the argument when passing it as shown in this example.
+
+Functions can also take functions as an argument as well but will use ****arrow+less than(->>)**** when passing a function.
+
+#+begin_src C
+  foo -> int a :: int {
+    return a;
+  }
+
+  bar -> int b :: void {
+    print("{}\n", b);
+  }
+
+  main :: int {
+    bar ->> foo -> 69; // This will print 69.
+    return 0;
+  }
+#+end_src
+
+** KeyWords
+
+The programming language has the keywords which include the following which are :
+#+begin_src C++
+  import
+  extern
+  while
+  for
+  goto
+  typeof
+  label
+  type
+  template
+  pub
+  static
+  cast
+#+end_src
+
+**** import
+  Import keyword is a way we include our modules where modules can be both user-defined and also from our standrad.
+
+**** extern
+  Extern keyword is a way we include C library the dynamic or static library to use it in this programming language.
+
+  #+begin_src C
+    extern "C" "libc" // libC
+    extern "C" "/home/xsoder/C/lib/libc.a" // Static Lib With path
+    extern "C" "lm" // Math lib
+    extern "C" "lraylib" // Raylib lib
+    extern "C" "libraylib.a" // Raylib lib
+  #+end_src
+
+**** while
+  while keyword is a way we can have a loop with a condition inside of it the way C defines it.
+
+**** for
+  for keyword is a way we can have a loop with a condition and interation.
+
+**** goto and label keyword
+  Goto keyword is used to jump to a label. Where label is a defined address used to be jumped for.
+
+  #+begin_src C
+    label jump:
+      print("Hello world\n");
+    goto jump
+  #+end_src
+
+  A Much more complete example would be:
+
+  #+begin_src C
+    foo -> int i :: void {
+      if (i % 2 = 0) {
+        goto print_foo;
+      } else {
+        goto print_baz;
+      }
+    label print_foo:
+      print("Foo Print\n");
+    label print_baz:
+      print("Baz Print\n");
+
+    }
+  #+end_src
+
+**** typeof
+  the typeof keyword is used to identify the data typeof the varaible.
+
+  #+begin_src C
+    int a = 0;
+    typeof(a); // Should Return int
+  #+end_src
+
+**** type
+  The type keyword is used to create collection of multiple data based variables at ones.
+  #+begin_src C
+    type name {
+      int a;
+      int b;
+      char* c;
+    };
+  #+end_src
+  Note that structs and unions and enums are a collection of type. By default type is ****unions**** from C. But types can be   specifed with <> operations.
+  Some example includes
+  #+begin_src C
+    type<struct> person {
+      int age;
+      char *name;
+    };
+
+    type<enum> person {
+      RED,
+      BLUE,
+      GREEN,
+    };
+  #+end_src
+**** template
+
+Templates are basically interfaces where u define what something should look like with out declaring a specific data type.
+
+#+begin_src C++
+  template <T> foo -> T a :: void {
+    typeof(a);
+    print("{}\n", a);
+  }
+
+  main :: int {
+    foo -> 30;
+    foo -> "Hello world";
+    return 0;
+  }
+#+end_src
+****** pub
+The pub keyword define what thing should be exposed to a module by default if we have two modules every function and varaible is hidden from the other module if we do not have the pub keyword.
+
+Module 1:
+#+begin_src C++
+  pub foo -> int a :: void {
+    print("{}\n", a);
+  }
+  bar -> int a :: void {
+    print("{}\n", a);
+  }
+#+end_src
+
+Module 2:
+#+begin_src C++
+  import "foo.qb"
+  main :: int {
+    foo -> 30; // This is a valid function call.
+    bar -> 40; // This is invalid function call.
+  }
+#+end_src
+
+**** static
+The static keyword is a keyword that is used to define visiblity.
+#+begin_src C++
+  foo :: void {
+    static int a = 0;
+    a = a + 1;
+    print("{}\n", a);
+  }
+
+  main :: int {
+    for (int i = 0; i < 5; i ++) {
+      foo;
+    }
+  }
+#+end_src
+
+The output will be
+#+begin_src C
+  1 , 2 , 3, 4 , 5;
+#+end_src
+**** cast
+The cast keyword is use to typecast one data type from one to another.
+#+begin_src C++
+  char a = 'A';
+  int b = cast<int> a;
+#+end_src
+
+<T> This is where you define where your data type is. Instead of T you pass in your datatype.
