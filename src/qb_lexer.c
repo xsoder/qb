@@ -64,8 +64,13 @@ struct Token QB_match_token(struct Lexer *lexer, struct Token *token)
     if (QB_is_alpha(c)) return QB_token_identifier(lexer, &current_token);
     if (QB_is_digit(c)) return QB_token_number(lexer, &current_token);
 
-    if(c == '-' && QB_advance(lexer) == '>') {
-        QB_make_token(lexer, &current_token, TOKEN_LARROW);
+    if(c == '-'){
+        c = QB_advance(lexer);
+        if(c == '>') {
+            return QB_make_token(lexer, &current_token, TOKEN_LARROW);
+        } else {
+            return QB_make_token(lexer, &current_token, TOKEN_SUBTRACT);
+        }
     }
     // TODO: Single symbol token
     switch (c) {

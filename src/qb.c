@@ -13,9 +13,10 @@ static const char* TOKEN_NAMES[] = {
     "TOKEN_COLON",
     "TOKEN_NUMBER",
     "TOKEN_PLUS",
+    "TOKEN_SUBTRACT",
     "TOKEN_LBRACE",
-    "TOKEN_RBRACE"
-    "TOKEN_ASTERIK"
+    "TOKEN_RBRACE",
+    "TOKEN_ASTERIK",
 };
 
 int main(int argc, char **argv)
