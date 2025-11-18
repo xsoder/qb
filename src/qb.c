@@ -42,12 +42,29 @@ void print_ast(Node *node, int indent) {
             print_ast(node->function_node.body, indent + 2);
             break;
 
+        case QB_VARIABLE:
+            printf("Variable: '%s'\n", node->variable_dec_node.name);
+            for (int i = 0; i < indent; i++) printf("  ");
+            printf("  Value:\n");
+            break;
+
         case NODE_BLOCK:
             printf("Block (statements: %d)\n", node->block_node.count);
             for (int i = 0; i < node->block_node.count; i++) {
                 print_ast(node->block_node.statements[i], indent + 1);
             }
             break;
+
+        case NODE_IDENTIFIER:
+            printf("Identifier: %s\n", node->identifer_node.name);
+            break;
+        case NODE_ASSIGNMENT:
+            printf("Assignment: '%s'\n", node->assignment_node.name);
+            for (int i = 0; i < indent; i++) printf("  ");
+            printf("  Value:\n");
+            print_ast(node->assignment_node.value, indent + 2);
+            break;
+
         // TODO: implement more stuff
         default:
             printf("Unknown node type: %d\n", node->type);
@@ -113,9 +130,17 @@ int main(int argc, char **argv) {
     Node *ast = NULL;
 
     if (QB_parser_check(&parser, TOKEN_IDENTIFIER)) {
-        printf("Parsing function declaration");
+        printf("Parsing function declaration\n");
         ast = QB_parse_funtion_dec(&parser);
         printf("Parse successful\n\n");
+    } else {
+        printf("Expected function declaration, got token type: %s\n",
+               TOKEN_NAMES[parser.current_token.type]);
+    }
+
+    if (QB_parser_check(&parser, TOKEN_IDENTIFIER)) {
+        printf("Parsing varaible declaration\n");
+        ast = QB_parse_variable_dec(&parser);
     } else {
         printf("Expected function declaration, got token type: %s\n",
                TOKEN_NAMES[parser.current_token.type]);

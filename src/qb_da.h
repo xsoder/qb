@@ -58,6 +58,8 @@ typedef enum NodeType {
     NODE_BLOCK,
     QB_FUNCTION,
     QB_VARIABLE,
+    NODE_IDENTIFIER,
+    NODE_ASSIGNMENT,
 } NodeType;
 
 typedef struct Node {
@@ -73,6 +75,13 @@ typedef struct Node {
             char *name;
             Node *body;
         } function_node;
+        struct {
+            char *name;
+            Node *value;
+        } assignment_node;
+        struct {
+            char *name;
+        } identifer_node;
         struct {
             char *name;
             int value;
