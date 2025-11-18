@@ -1,4 +1,2 @@
-main -> int argc -> char **argv :: int {
-     int x = 10 - 1;
-     return 1;
+main :: i32 {
 }

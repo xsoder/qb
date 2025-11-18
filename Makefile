@@ -26,8 +26,8 @@ $(TARGET): $(OBJ)
 	@printf "LD %-20s\n" $@
 	$(CC) $(OBJ) -o $@
 
-run:
-	./$(TARGET)
+run: $(TARGET)
+	./$(TARGET) test.qb
 
 clean:
 	$(RM) -r $(OBJ_DIR) $(TARGET)

@@ -132,7 +132,7 @@ The programming language has the keywords which include the following which are 
 
   #+begin_src C
     foo -> int i :: void {
-      if (i % 2 = 0) {
+      if i % 2 = 0 {
         goto print_foo;
       } else {
         goto print_baz;

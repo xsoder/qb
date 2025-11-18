@@ -7,15 +7,6 @@ void QB_init_lexer(struct Lexer *lexer, const char* src)
     lexer->current = src;
 }
 
-char QB_advance(struct Lexer *lexer)
-{
-    return *lexer->current++;
-}
-
-char QB_peek(struct Lexer *lexer)
-{
-    return *lexer->current;
-}
 
 int QB_is_alpha(char c)
 {
@@ -27,6 +18,17 @@ int QB_is_alpha(char c)
 int QB_is_digit(char c)
 {
     return (c >= '0' && c <= '9');
+}
+
+
+char QB_lexer_advance(struct Lexer *lexer)
+{
+    return *lexer->current++;
+}
+
+char QB_lexer_peek(struct Lexer *lexer)
+{
+    return *lexer->current;
 }
 
 void QB_skip_whitespace(struct Lexer *lexer)
@@ -45,12 +47,12 @@ struct Token QB_make_token(struct Lexer *lexer, struct Token *token, enum TokenT
 }
 
 struct Token QB_token_identifier(struct Lexer *lexer, struct Token *token) {
-    while (QB_is_alpha(QB_peek(lexer)) || QB_is_digit(QB_peek(lexer))) QB_advance(lexer);
+    while (QB_is_alpha(QB_lexer_peek(lexer)) || QB_is_digit(QB_lexer_peek(lexer))) QB_lexer_advance(lexer);
     return QB_make_token(lexer, token, TOKEN_IDENTIFIER);
 }
 
 struct Token QB_token_number(struct Lexer *lexer, struct Token *token) {
-    while (QB_is_digit(QB_peek(lexer))) QB_advance(lexer);
+    while (QB_is_digit(QB_lexer_peek(lexer))) QB_lexer_advance(lexer);
     return QB_make_token(lexer, token, TOKEN_NUMBER);
 }
 
@@ -60,12 +62,12 @@ struct Token QB_match_token(struct Lexer *lexer, struct Token *token)
     QB_skip_whitespace(lexer);
     lexer->start = lexer->current;
 
-    char c = QB_advance(lexer);
+    char c = QB_lexer_advance(lexer);
     if (QB_is_alpha(c)) return QB_token_identifier(lexer, &current_token);
     if (QB_is_digit(c)) return QB_token_number(lexer, &current_token);
 
     if(c == '-'){
-        c = QB_advance(lexer);
+        c = QB_lexer_advance(lexer);
         if(c == '>') {
             return QB_make_token(lexer, &current_token, TOKEN_LARROW);
         } else {
@@ -81,6 +83,9 @@ struct Token QB_match_token(struct Lexer *lexer, struct Token *token)
         case '}'    : return QB_make_token(lexer, &current_token, TOKEN_RBRACE);
         case '='    : return QB_make_token(lexer, &current_token, TOKEN_EQ);
         case '*'    : return QB_make_token(lexer, &current_token, TOKEN_ASTERIK);
+        case '<'    : return QB_make_token(lexer, &current_token, TOKEN_LESS);
+        case '>'    : return QB_make_token(lexer, &current_token, TOKEN_GREATER);
+        case '"'    : return QB_make_token(lexer, &current_token, TOKEN_DOUBLE_QUOTES);
     }
     return QB_make_token(lexer, &current_token, TOKEN_EOF);
 }

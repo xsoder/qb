@@ -16,6 +16,9 @@ enum TokenType {
     TOKEN_LBRACE,
     TOKEN_RBRACE,
     TOKEN_ASTERIK,
+    TOKEN_LESS,
+    TOKEN_GREATER,
+    TOKEN_DOUBLE_QUOTES,
 };
 
 struct Token {
@@ -31,8 +34,8 @@ struct Lexer {
 
 // Helper functions
 void QB_init_lexer(struct Lexer *lexer, const char* src);
-char QB_advance(struct Lexer *lexer);
-char QB_peek(struct Lexer *lexer);
+char QB_lexer_advance(struct Lexer *lexer);
+char QB_lexer_peek(struct Lexer *lexer);
 int  QB_is_alpha(char c);
 int  QB_is_digit(char c);
 void QB_skip_whitespace(struct Lexer *lexer);
