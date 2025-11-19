@@ -3,25 +3,33 @@
 
 #include <stddef.h>
 
+#define TOKEN \
+    XX(TOKEN_IDENTIFIER)\
+    XX(TOKEN_LARROW)\
+    XX(TOKEN_EOF)\
+    XX(TOKEN_EQ)\
+    XX(TOKEN_SEMICOLON)\
+    XX(TOKEN_COLON)\
+    XX(TOKEN_NUMBER)\
+    XX(TOKEN_PLUS)\
+    XX(TOKEN_SUBTRACT)\
+    XX(TOKEN_LBRACE)\
+    XX(TOKEN_RBRACE)\
+    XX(TOKEN_ASTERIK)\
+    XX(TOKEN_LESS)\
+    XX(TOKEN_GREATER)\
+    XX(TOKEN_DOUBLE_QUOTES)\
+
 enum TokenType {
-    TOKEN_IDENTIFIER,
-    TOKEN_LARROW,
-    TOKEN_EOF,
-    TOKEN_EQ,
-    TOKEN_SEMICOLON,
-    TOKEN_COLON,
-    TOKEN_NUMBER,
-    TOKEN_PLUS,
-    TOKEN_SUBTRACT,
-    TOKEN_LBRACE,
-    TOKEN_RBRACE,
-    TOKEN_ASTERIK,
-    TOKEN_LESS,
-    TOKEN_GREATER,
-    TOKEN_DOUBLE_QUOTES,
+    #define XX(value) value,
+        TOKEN
+    #undef XX
 };
 
+extern char *TokenName[];
+
 struct Token {
+    const char *name;
     enum TokenType type;
     const char *start;
     int len;
@@ -42,8 +50,9 @@ void QB_skip_whitespace(struct Lexer *lexer);
 
 // Token related function
 struct Token QB_make_token(struct Lexer *lexer, struct Token *token, enum TokenType type);
-struct Token QB_toekn_identifier(struct Lexer *lexer, struct Token *token);
+struct Token QB_token_identifier(struct Lexer *lexer, struct Token *token);
 struct Token QB_token_number(struct Lexer *lexer, struct Token *token);
 struct Token QB_match_token(struct Lexer *lexer, struct Token *token);
+char*  QB_get_token_name(enum TokenType type);
 
 #endif //QB_LEXER_H

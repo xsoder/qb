@@ -25,8 +25,8 @@ void QB_add_var(struct Parser *parser, const char* name);
 int  QB_var_exists(struct Parser *parser, const char* name);
 
 // Parser functions
-Node* QB_parse_block(struct Parser *parser);
-Node* QB_parse_funtion_dec(struct Parser *parser);
+Node *QB_parse_block(struct Parser *parser);
+Node *QB_parse_funtion_dec(struct Parser *parser);
 Node *QB_parse_variable_dec(struct Parser *parser);
 Node *QB_parser_expression(struct Parser *parser);
 Node *QB_parser_assigment(struct Parser *parser);

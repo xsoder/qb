@@ -50,7 +50,11 @@ static inline void sb_append(struct String_Builder *sb, const char *str)
 }
 
 typedef struct Node Node;
-struct Token;
+struct Token {
+    char *name;
+    char *value;
+    char *type;
+};
 
 typedef enum NodeType {
     NODE_NUMBER,
@@ -60,6 +64,7 @@ typedef enum NodeType {
     QB_VARIABLE,
     NODE_IDENTIFIER,
     NODE_ASSIGNMENT,
+    NODE_FUNCTION_CALL,
 } NodeType;
 
 typedef struct Node {

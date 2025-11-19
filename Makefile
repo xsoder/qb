@@ -29,6 +29,10 @@ $(TARGET): $(OBJ)
 run: $(TARGET)
 	./$(TARGET) test.qb
 
+fasm:
+	fasm ./test.qb.asm
+	gcc -no-pie -o test ./test.qb.o
+
 clean:
 	$(RM) -r $(OBJ_DIR) $(TARGET)
 

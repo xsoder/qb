@@ -1,6 +1,12 @@
 #include "qb_lexer.h"
 #include <stdio.h>
 
+char* TokenName[] = {
+    #define XX(value) #value,
+    TOKEN
+    #undef XX
+};
+
 void QB_init_lexer(struct Lexer *lexer, const char* src)
 {
     lexer->start = src;
@@ -54,6 +60,14 @@ struct Token QB_token_identifier(struct Lexer *lexer, struct Token *token) {
 struct Token QB_token_number(struct Lexer *lexer, struct Token *token) {
     while (QB_is_digit(QB_lexer_peek(lexer))) QB_lexer_advance(lexer);
     return QB_make_token(lexer, token, TOKEN_NUMBER);
+}
+
+char* QB_get_token_name(enum TokenType type) {
+    if (type >= 0 && type < sizeof(TokenName) / sizeof(TokenName[0])) {
+        return TokenName[type];
+    } else {
+        return "UNKNOWN_TOKEN";
+    }
 }
 
 struct Token QB_match_token(struct Lexer *lexer, struct Token *token)
