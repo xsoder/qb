@@ -50,7 +50,7 @@ static inline void sb_append(struct String_Builder *sb, const char *str)
 }
 
 typedef struct Node Node;
-struct Token {
+struct Token_ {
     char *name;
     char *value;
     char *type;
